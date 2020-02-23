@@ -9,7 +9,7 @@ public class BaseProjectile : Shootable
 
     new protected Rigidbody2D rigidbody;
 
-    private void Awake()
+    protected void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
     }
@@ -27,5 +27,19 @@ public class BaseProjectile : Shootable
     protected virtual IEnumerator AfterShotRoutine(Transform shooterTransform)
     {
         yield break;
+    }
+
+    protected Coroutine Rotate(float angularSpeed)
+    {
+        return StartCoroutine(Rotation(angularSpeed));
+    }
+
+    private IEnumerator Rotation(float angularSpeed)
+    {
+        while (gameObject.activeInHierarchy)
+        {
+            transform.Rotate(0f, 0f, angularSpeed * Time.deltaTime);
+            yield return null;
+        }
     }
 }

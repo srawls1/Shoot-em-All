@@ -10,7 +10,7 @@ public class Boomerang : BaseProjectile
 
     protected override IEnumerator AfterShotRoutine(Transform shooterTransform)
     {
-        StartCoroutine(Rotation());
+        Rotate(angularSpeed);
         float reversalDistance = 0.5f * speed * reversalPeriod;
         float waitDistance = distance - reversalDistance - startingDistance;
         float waitTime = waitDistance / speed;
@@ -21,15 +21,6 @@ public class Boomerang : BaseProjectile
         for (float dt = 0f; dt < reversalPeriod; dt += Time.deltaTime)
         {
             rigidbody.velocity = Vector2.Lerp(startingVelocity, finalVelocity, dt / reversalPeriod);
-            yield return null;
-        }
-    }
-
-    private IEnumerator Rotation()
-    {
-        while (gameObject.activeInHierarchy)
-        {
-            transform.Rotate(0f, 0f, angularSpeed * Time.deltaTime);
             yield return null;
         }
     }
